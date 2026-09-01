@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product — FOUND. THREADS</title>
+    <meta name="description" content="Drop 001 pieces from FOUND. THREADS." />
+    <link rel="icon" href="assets/mark-f.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,600;1,6..96,500&family=Inter:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header" data-solid="true">
+      <div class="nav-left">
+        <button class="menu-btn" type="button" data-open-menu>Menu</button>
+        <a class="nav-link" href="shop.html">Shop</a>
+        <a class="nav-link" href="index.html#drop">Drop 001</a>
+        <a class="nav-link" href="story.html">Story</a>
+      </div>
+      <a class="logo" href="index.html">FOUND.</a>
+      <div class="nav-right">
+        <button class="bag-btn" type="button" data-open-cart>
+          Bag <span class="bag-count" data-bag-count>0</span>
+        </button>
+      </div>
+    </header>
+
+    <nav class="mobile-nav" aria-label="Mobile">
+      <button class="mobile-close" type="button" data-close-menu>Close</button>
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="story.html">Story</a>
+    </nav>
+
+    <main class="pdp" data-pdp>
+      <div class="pdp-gallery">
+        <div class="pdp-gallery__main">
+          <img data-pdp-main src="assets/product-essential-tee.jpg" alt="" />
+        </div>
+        <div class="pdp-thumbs" data-pdp-thumbs></div>
+      </div>
+      <div class="pdp-info">
+        <p class="eyebrow">Drop 001</p>
+        <h1 class="display" data-pdp-name>F. Essential Tee</h1>
+        <p class="pdp-price" data-pdp-price>R499</p>
+        <p class="pdp-desc" data-pdp-desc></p>
+        <ul class="pdp-details" data-pdp-details></ul>
+        <div class="size-row">
+          <p>Select size</p>
+          <div class="size-options" data-size-options></div>
+        </div>
+        <button class="add-btn" type="button" data-add>Add to bag</button>
+        <p class="pdp-note">Quietly made. Intentionally worn.</p>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="logo" href="index.html">FOUND.</a>
+          <p class="threads">THREADS</p>
+          <p>Woven by faith. Driven by purpose. Built to leave a legacy.</p>
+        </div>
+        <nav class="footer-nav">
+          <a class="footer-link" href="shop.html">Shop</a>
+          <a class="footer-link" href="story.html">Story</a>
+          <a class="footer-link" href="index.html">Home</a>
+        </nav>
+        <div class="newsletter">
+          <h3>Join the chapter</h3>
+          <p>Be first when the next drop is released.</p>
+          <form data-newsletter>
+            <input type="email" required placeholder="Email address" aria-label="Email address" />
+            <button type="submit">Enter</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-base">
+        <span>© 2026 FOUND. THREADS</span>
+        <span>South Africa</span>
+      </div>
+    </footer>
+
+    <div class="cart-backdrop" data-close-cart></div>
+    <aside class="cart" aria-label="Bag">
+      <div class="cart-head">
+        <h2>Bag</h2>
+        <button type="button" data-close-cart>Close</button>
+      </div>
+      <div class="cart-body" data-cart-body></div>
+      <div class="cart-foot" data-cart-foot hidden>
+        <div class="cart-subtotal">
+          <span>Subtotal</span>
+          <span data-subtotal>R0</span>
+        </div>
+        <button class="checkout-btn" type="button" data-checkout-start>Checkout</button>
+        <p class="checkout-note">Drop 001 is released in limited quantities.</p>
+        <form class="checkout-form" data-checkout-form>
+          <input type="text" name="name" required placeholder="Full name" />
+          <input type="email" name="email" required placeholder="Email" />
+          <input type="tel" name="phone" required placeholder="Phone" />
+          <input type="text" name="city" required placeholder="City" />
+          <button class="primary-btn" type="submit">Place order</button>
+        </form>
+        <div class="order-confirm" data-order-confirm>
+          <h3>Received.</h3>
+          <p>A member of FOUND will confirm your order shortly.</p>
+        </div>
+      </div>
+    </aside>
+
+    <script src="js/app.js"></script>
+  </body>
+</html>
