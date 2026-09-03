@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout — FOUND.</title>
+    <meta name="description" content="Place a FOUND. order by bank transfer." />
+    <link rel="icon" href="assets/mark-f.jpg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,600;1,6..96,500&family=Inter:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <header class="site-header" data-solid="true">
+      <div class="nav-left">
+        <button class="menu-btn" type="button" data-open-menu>Menu</button>
+        <a class="nav-link" href="shop.html">Shop</a>
+        <a class="nav-link" href="index.html#drop">Drop 001</a>
+        <a class="nav-link" href="story.html">Story</a>
+      </div>
+      <a class="logo" href="index.html">FOUND.</a>
+      <div class="nav-right">
+        <button class="bag-btn" type="button" data-open-cart>
+          Bag <span class="bag-count" data-bag-count>0</span>
+        </button>
+      </div>
+    </header>
+
+    <nav class="mobile-nav" aria-label="Mobile">
+      <button class="mobile-close" type="button" data-close-menu>Close</button>
+      <a href="index.html">Home</a>
+      <a href="shop.html">Shop</a>
+      <a href="story.html">Story</a>
+    </nav>
+
+    <main class="checkout-page">
+      <header class="page-hero">
+        <p class="eyebrow">Checkout</p>
+        <h1 class="display">Bank transfer</h1>
+        <p>No card payments. Pay by deposit, then place your order with that reference.</p>
+      </header>
+
+      <div class="checkout-layout" data-checkout-app>
+        <form class="checkout-panel" data-order-form novalidate>
+          <section>
+            <h2>Delivery</h2>
+            <div class="field-grid">
+              <label>
+                First name
+                <input type="text" name="firstName" required autocomplete="given-name" />
+              </label>
+              <label>
+                Surname
+                <input type="text" name="lastName" required autocomplete="family-name" />
+              </label>
+              <label class="span-2">
+                Email
+                <input type="email" name="email" required autocomplete="email" />
+              </label>
+              <label class="span-2">
+                Phone
+                <input type="tel" name="phone" required autocomplete="tel" />
+              </label>
+              <label class="span-2">
+                Street address
+                <input type="text" name="address" required autocomplete="street-address" />
+              </label>
+              <label>
+                City
+                <input type="text" name="city" required autocomplete="address-level2" />
+              </label>
+              <label>
+                Province
+                <select name="province" required>
+                  <option value="">Select</option>
+                  <option>Eastern Cape</option>
+                  <option>Free State</option>
+                  <option>Gauteng</option>
+                  <option>KwaZulu-Natal</option>
+                  <option>Limpopo</option>
+                  <option>Mpumalanga</option>
+                  <option>North West</option>
+                  <option>Northern Cape</option>
+                  <option>Western Cape</option>
+                </select>
+              </label>
+              <label>
+                Postal code
+                <input type="text" name="postal" required autocomplete="postal-code" />
+              </label>
+              <label>
+                Country
+                <input type="text" name="country" value="South Africa" required />
+              </label>
+              <label class="span-2">
+                Order notes (optional)
+                <textarea name="notes" rows="3" placeholder="Delivery notes"></textarea>
+              </label>
+            </div>
+          </section>
+
+          <section>
+            <h2>Payment</h2>
+            <div class="pay-method is-selected">
+              <p class="pay-method__title">Bank transfer / bank deposit</p>
+              <p class="pay-method__note">Cards are not accepted. Transfer the order total, then enter the reference you used.</p>
+            </div>
+
+            <dl class="bank-box" data-bank-box></dl>
+
+            <p class="ref-guide">
+              Use this format on the transfer:
+              <strong data-ref-suggest>Name_Surname</strong>
+              <button type="button" class="text-link" data-use-suggest>Use this reference</button>
+            </p>
+
+            <label class="ref-field">
+              Bank reference you used
+              <input
+                type="text"
+                name="reference"
+                required
+                minlength="3"
+                autocomplete="off"
+                placeholder="Name_Surname"
+                data-reference
+              />
+            </label>
+            <p class="ref-warn" data-ref-warn hidden>
+              Enter the exact reference from your bank transfer before you can place the order. An incorrect reference can delay or dispute the order.
+            </p>
+            <p class="ref-hint">
+              The reference must match the one on your deposit. We use it to find your payment.
+            </p>
+          </section>
+
+          <p class="form-error" data-form-error hidden></p>
+          <button class="add-btn" type="submit" data-place-order disabled>Place order</button>
+        </form>
+
+        <aside class="checkout-summary">
+          <h2>Your bag</h2>
+          <div data-checkout-items></div>
+          <div class="cart-subtotal">
+            <span>Total</span>
+            <span data-checkout-total>R0</span>
+          </div>
+          <p class="checkout-note">You will receive an email confirmation after placing the order.</p>
+        </aside>
+      </div>
+
+      <section class="checkout-done" data-checkout-done hidden>
+        <p class="eyebrow">Order received</p>
+        <h2 class="display" data-done-id>Thank you.</h2>
+        <p data-done-copy></p>
+        <a class="text-link" href="shop.html">Continue</a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-simple">
+        <a class="logo" href="index.html">FOUND.</a>
+        <p>Woven by faith.</p>
+        <p>Cape Town, South Africa.</p>
+      </div>
+    </footer>
+
+    <div class="cart-backdrop" data-close-cart></div>
+    <aside class="cart" aria-label="Bag">
+      <div class="cart-head">
+        <h2>Bag</h2>
+        <button type="button" data-close-cart>Close</button>
+      </div>
+      <div class="cart-body" data-cart-body></div>
+      <div class="cart-foot" data-cart-foot hidden>
+        <div class="cart-subtotal">
+          <span>Subtotal</span>
+          <span data-subtotal>R0</span>
+        </div>
+        <a class="checkout-btn" href="checkout.html">Checkout</a>
+        <p class="checkout-note">Bank transfer only.</p>
+      </div>
+    </aside>
+
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/checkout.js"></script>
+  </body>
+</html>

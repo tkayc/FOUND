@@ -1,53 +1,184 @@
 const PRODUCTS = [
   {
     id: "essential-tee",
-    name: "F. Essential Tee",
-    price: 499,
+    name: "The F. Essential Tee",
+    price: 549,
     category: "tops",
-    color: "Cream",
-    blurb: "Quietly made. Intentionally worn.",
-    description:
-      "A heavyweight cotton tee, cut oversized and finished without noise. The foundation of Drop 001 — made to be worn often, and well.",
-    details: ["Heavyweight cotton", "Oversized fit", "Cream", "Limited drop"],
-    sizes: ["S", "M", "L", "XL"],
-    images: [
-      "assets/product-essential-tee.jpg",
-      "assets/essential-lifestyle.jpg",
-      "assets/hero-campaign.jpg",
+    featured: true,
+    drop: "Drop 001",
+    sizes: ["M", "L", "XL", "2XL"],
+    details:
+      "Heavyweight cotton crew neck with the F. mark on the chest. Quietly made for daily wear. Available in Black, Cream and Chocolate.",
+    sizeFit:
+      "Oversized essential fit. M, L, XL and 2XL. If you are between sizes, take the larger size.",
+    delivery:
+      "Orders are confirmed after your bank transfer is matched to your reference. Delivery within South Africa follows once payment is verified. Returns are accepted on unused items in original condition within 7 days of delivery.",
+    colors: [
+      {
+        id: "black",
+        name: "Black",
+        images: [
+          "images/black_tee_front.jpeg",
+          "images/F_essential.t_black_logo.jpeg",
+          "images/black_tee.jpeg",
+          "images/black_tee_back.jpeg",
+        ],
+      },
+      {
+        id: "cream",
+        name: "Cream",
+        images: [
+          "images/colar_cream.tee.jpeg",
+          "images/cream_tee_grid.jpeg",
+          "images/tees.jpeg",
+          "images/tees and caps.jpeg",
+        ],
+      },
+      {
+        id: "chocolate",
+        name: "Chocolate",
+        images: [
+          "images/chocolate tee .jpeg",
+          "images/WhatsApp Image 2026-09-03 at 08.32.07 (1).jpeg",
+          "images/choc_tee walk.jpeg",
+          "images/choc_tee back.jpeg",
+        ],
+      },
     ],
   },
   {
     id: "faith-tee",
-    name: "Woven By Faith Tee",
-    price: 499,
+    name: "The Woven By Faith Tee",
+    price: 549,
     category: "tops",
-    color: "Black",
-    blurb: "Woven by faith.",
-    description:
-      "The same essential cut, in black. A quieter statement — faith held close, purpose worn lightly.",
-    details: ["Heavyweight cotton", "Oversized fit", "Black", "Limited drop"],
-    sizes: ["S", "M", "L", "XL"],
-    images: [
-      "assets/product-faith-tee.jpg",
-      "assets/editorial-01.jpg",
-      "assets/fabric-detail.jpg",
+    featured: true,
+    drop: "Drop 001",
+    sizes: ["M", "L", "XL", "2XL"],
+    details:
+      "Heavyweight cotton with WOVEN BY FAITH across the chest. The same essential cut, made to be worn with intention.",
+    sizeFit:
+      "Oversized essential fit. M, L, XL and 2XL. If you are between sizes, take the larger size.",
+    delivery:
+      "Orders are confirmed after your bank transfer is matched to your reference. Delivery within South Africa follows once payment is verified. Returns are accepted on unused items in original condition within 7 days of delivery.",
+    colors: [
+      {
+        id: "black",
+        name: "Black",
+        images: [
+          "images/cream and black tees.jpeg",
+          "images/black_tee_back.jpeg",
+          "images/tees.jpeg",
+          "images/tees and caps.jpeg",
+        ],
+      },
+      {
+        id: "cream",
+        name: "Cream",
+        images: [
+          "images/cream_tee_grid.jpeg",
+          "images/cream and black tees.jpeg",
+          "images/colar_cream.tee.jpeg",
+          "images/tees.jpeg",
+        ],
+      },
+      {
+        id: "chocolate",
+        name: "Chocolate",
+        images: [
+          "images/chocolate tee .jpeg",
+          "images/choc_tee back.jpeg",
+          "images/tees.jpeg",
+          "images/WhatsApp Image 2026-09-03 at 08.32.07 (3).jpeg",
+        ],
+      },
     ],
   },
   {
     id: "cap",
-    name: "FOUND Cap",
-    price: 270,
+    name: "The F. Essential Cap",
+    price: 299,
     category: "accessories",
-    color: "Cream",
-    blurb: "Built to leave a legacy.",
-    description:
-      "An unstructured cotton cap in cream. Soft structure, unbranded face — made to live with the rest of the drop.",
-    details: ["Unstructured cotton", "One size", "Cream", "Limited drop"],
+    featured: true,
+    drop: "Drop 001",
     sizes: ["OS"],
-    images: [
-      "assets/product-cap.jpg",
-      "assets/editorial-02.jpg",
-      "assets/story-atelier.jpg",
+    details:
+      "Structured cotton cap with the F. mark or WOVEN BY FAITH. Made to sit with the rest of Drop 001.",
+    sizeFit: "One size. Adjustable back strap.",
+    delivery:
+      "Orders are confirmed after your bank transfer is matched to your reference. Delivery within South Africa follows once payment is verified. Returns are accepted on unused items in original condition within 7 days of delivery.",
+    colors: [
+      {
+        id: "black",
+        name: "Black",
+        images: [
+          "images/black cap.jpeg",
+          "images/black_tee_front.jpeg",
+          "images/caps and tees.jpeg",
+        ],
+      },
+      {
+        id: "cream",
+        name: "Cream",
+        images: [
+          "images/WhatsApp Image 2026-09-03 at 08.32.07 (4).jpeg",
+          "images/WhatsApp Image 2026-09-03 at 08.32.07 (6).jpeg",
+          "images/tees and caps.jpeg",
+        ],
+      },
+      {
+        id: "chocolate",
+        name: "Chocolate",
+        images: [
+          "images/teez and capz.jpeg",
+          "images/caps and tees.jpeg",
+          "images/tees and caps.jpeg",
+        ],
+      },
+    ],
+  },
+  {
+    id: "drop-001-set",
+    name: "Drop 001 Set",
+    price: 799,
+    category: "sets",
+    featured: false,
+    drop: "Drop 001",
+    blurb: "Tee + Cap",
+    sizes: ["M", "L", "XL", "2XL"],
+    details:
+      "The Drop 001 set: one tee and one cap. Choose your colourway. Tee size is M, L, XL or 2XL. Cap is one size.",
+    sizeFit: "Tee: oversized essential fit. Cap: one size, adjustable.",
+    delivery:
+      "Orders are confirmed after your bank transfer is matched to your reference. Delivery within South Africa follows once payment is verified. Returns are accepted on unused items in original condition within 7 days of delivery.",
+    colors: [
+      {
+        id: "black",
+        name: "Black",
+        images: [
+          "images/caps and tees.jpeg",
+          "images/black_tee_front.jpeg",
+          "images/black cap.jpeg",
+          "images/tees and caps.jpeg",
+        ],
+      },
+      {
+        id: "cream",
+        name: "Cream",
+        images: [
+          "images/tees and caps.jpeg",
+          "images/cream and black tees.jpeg",
+          "images/WhatsApp Image 2026-09-03 at 08.32.07 (4).jpeg",
+        ],
+      },
+      {
+        id: "chocolate",
+        name: "Chocolate",
+        images: [
+          "images/teez and capz.jpeg",
+          "images/chocolate tee .jpeg",
+          "images/WhatsApp Image 2026-09-03 at 08.32.07 (6).jpeg",
+        ],
+      },
     ],
   },
 ];
@@ -56,7 +187,20 @@ const CART_KEY = "found-cart";
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 
-const formatPrice = (value) => `R${value.toLocaleString("en-ZA")}`;
+const formatPrice = (value) => `R${value}`;
+
+const assetUrl = (src) =>
+  String(src)
+    .split("/")
+    .map((part) => encodeURIComponent(part))
+    .join("/");
+
+const productById = (id) => PRODUCTS.find((item) => item.id === id);
+
+const colorOf = (product, colorId) =>
+  product.colors.find((c) => c.id === colorId) || product.colors[0];
+
+const productThumb = (product, colorId) => colorOf(product, colorId).images[0];
 
 const readCart = () => {
   try {
@@ -73,31 +217,33 @@ const writeCart = (cart) => {
 
 const cartCount = () => readCart().reduce((sum, item) => sum + item.qty, 0);
 
-const addToCart = (id, size) => {
+const clampQty = (value) => Math.max(1, Math.min(20, Number(value) || 1));
+
+const sameLine = (item, id, size, color) =>
+  item.id === id && item.size === size && item.color === color;
+
+const addToCart = (id, size, qty = 1, color = "") => {
+  const amount = clampQty(qty);
   const cart = readCart();
-  const existing = cart.find((item) => item.id === id && item.size === size);
-  if (existing) existing.qty += 1;
-  else cart.push({ id, size, qty: 1 });
+  const existing = cart.find((item) => sameLine(item, id, size, color));
+  if (existing) existing.qty = clampQty(existing.qty + amount);
+  else cart.push({ id, size, color, qty: amount });
   writeCart(cart);
   openCart();
 };
 
-const updateQty = (id, size, delta) => {
+const updateQty = (id, size, color, delta) => {
   const cart = readCart()
     .map((item) =>
-      item.id === id && item.size === size
-        ? { ...item, qty: item.qty + delta }
-        : item
+      sameLine(item, id, size, color) ? { ...item, qty: item.qty + delta } : item
     )
     .filter((item) => item.qty > 0);
   writeCart(cart);
 };
 
-const removeItem = (id, size) => {
-  writeCart(readCart().filter((item) => !(item.id === id && item.size === size)));
+const removeItem = (id, size, color) => {
+  writeCart(readCart().filter((item) => !sameLine(item, id, size, color)));
 };
-
-const productById = (id) => PRODUCTS.find((item) => item.id === id);
 
 function renderCart() {
   const countEls = $$("[data-bag-count]");
@@ -127,18 +273,20 @@ function renderCart() {
     .map((item) => {
       const product = productById(item.id);
       if (!product) return "";
+      const color = colorOf(product, item.color);
+      const sizeLabel = item.size === "OS" ? "One size" : item.size;
       return `
         <article class="cart-item">
-          <img src="${product.images[0]}" alt="${product.name}">
+          <img src="${assetUrl(productThumb(product, item.color))}" alt="${product.name}">
           <div>
             <h3>${product.name}</h3>
-            <p>${item.size === "OS" ? "One size" : item.size} · ${formatPrice(product.price)}</p>
-            <button class="remove-item" data-remove="${product.id}" data-size="${item.size}">Remove</button>
+            <p>${color.name} · ${sizeLabel} · ${formatPrice(product.price)}</p>
+            <button class="remove-item" data-remove="${product.id}" data-size="${item.size}" data-color="${item.color}">Remove</button>
           </div>
           <div class="qty">
-            <button data-qty="${product.id}" data-size="${item.size}" data-delta="-1" aria-label="Decrease">−</button>
+            <button data-qty="${product.id}" data-size="${item.size}" data-color="${item.color}" data-delta="-1" aria-label="Decrease">−</button>
             <span>${item.qty}</span>
-            <button data-qty="${product.id}" data-size="${item.size}" data-delta="1" aria-label="Increase">+</button>
+            <button data-qty="${product.id}" data-size="${item.size}" data-color="${item.color}" data-delta="1" aria-label="Increase">+</button>
           </div>
         </article>
       `;
@@ -178,25 +326,46 @@ function closeMenu() {
 function renderProductGrid(target, filter = "all") {
   const root = $(target);
   if (!root) return;
-  const items = PRODUCTS.filter(
-    (item) => filter === "all" || item.category === filter
-  );
+  const featuredOnly = root.hasAttribute("data-home-grid");
+  const items = PRODUCTS.filter((item) => {
+    if (featuredOnly) return item.featured;
+    return filter === "all" || item.category === filter;
+  });
   root.innerHTML = items
-    .map(
-      (item) => `
+    .map((item) => {
+      const extra = item.blurb
+        ? `<p class="product-card__blurb">${item.blurb}</p>`
+        : "";
+      return `
       <a class="product-card in-view" href="product.html?id=${item.id}">
         <div class="product-card__media">
-          <img src="${item.images[0]}" alt="${item.name}">
+          <img src="${assetUrl(item.colors[0].images[0])}" alt="${item.name}">
         </div>
         <div class="product-card__meta">
           <p class="product-card__name">${item.name}</p>
+          ${extra}
           <p class="product-card__price">${formatPrice(item.price)}</p>
         </div>
       </a>
+    `;
+    })
+    .join("");
+  observeInView();
+}
+
+function setGallery(product, colorId) {
+  const images = colorOf(product, colorId).images;
+  $("[data-pdp-main]").src = assetUrl(images[0]);
+  $("[data-pdp-main]").alt = product.name;
+  $("[data-pdp-thumbs]").innerHTML = images
+    .map(
+      (src, index) => `
+      <button type="button" class="${index === 0 ? "is-active" : ""}" data-thumb="${assetUrl(src)}">
+        <img src="${assetUrl(src)}" alt="">
+      </button>
     `
     )
     .join("");
-  observeInView();
 }
 
 function initProductPage() {
@@ -205,23 +374,25 @@ function initProductPage() {
   const id = new URLSearchParams(window.location.search).get("id") || "essential-tee";
   const product = productById(id) || PRODUCTS[0];
   let selectedSize = product.sizes.length === 1 ? product.sizes[0] : null;
+  let selectedColor = product.colors[0].id;
 
   $("[data-pdp-name]").textContent = product.name;
   $("[data-pdp-price]").textContent = formatPrice(product.price);
-  $("[data-pdp-desc]").textContent = product.description;
-  $("[data-pdp-main]").src = product.images[0];
-  $("[data-pdp-main]").alt = product.name;
-  document.title = `${product.name} — FOUND. THREADS`;
+  $("[data-pdp-drop]").textContent = product.drop;
+  document.title = `${product.name} — FOUND.`;
 
-  $("[data-pdp-details]").innerHTML = product.details
-    .map((line) => `<li>${line}</li>`)
-    .join("");
+  const details = $("[data-acc-details]");
+  const sizeFit = $("[data-acc-fit]");
+  const delivery = $("[data-acc-delivery]");
+  if (details) details.textContent = product.details;
+  if (sizeFit) sizeFit.textContent = product.sizeFit;
+  if (delivery) delivery.textContent = product.delivery;
 
-  $("[data-pdp-thumbs]").innerHTML = product.images
+  $("[data-color-options]").innerHTML = product.colors
     .map(
-      (src, index) => `
-      <button type="button" class="${index === 0 ? "is-active" : ""}" data-thumb="${src}">
-        <img src="${src}" alt="">
+      (color, index) => `
+      <button type="button" data-color="${color.id}" class="${index === 0 ? "is-active" : ""}">
+        ${color.name}
       </button>
     `
     )
@@ -229,18 +400,30 @@ function initProductPage() {
 
   $("[data-size-options]").innerHTML = product.sizes
     .map((size) => {
-      const label = size === "OS" ? "OS" : size;
+      const label = size === "OS" ? "One size" : size;
       return `<button type="button" data-size="${size}" class="${
         selectedSize === size ? "is-active" : ""
       }">${label}</button>`;
     })
     .join("");
 
+  setGallery(product, selectedColor);
+
   $("[data-pdp-thumbs]").addEventListener("click", (event) => {
     const btn = event.target.closest("[data-thumb]");
     if (!btn) return;
     $("[data-pdp-main]").src = btn.dataset.thumb;
     $$("[data-thumb]").forEach((el) => el.classList.toggle("is-active", el === btn));
+  });
+
+  $("[data-color-options]").addEventListener("click", (event) => {
+    const btn = event.target.closest("[data-color]");
+    if (!btn) return;
+    selectedColor = btn.dataset.color;
+    $$("[data-color]", $("[data-color-options]")).forEach((el) =>
+      el.classList.toggle("is-active", el === btn)
+    );
+    setGallery(product, selectedColor);
   });
 
   $("[data-size-options]").addEventListener("click", (event) => {
@@ -253,46 +436,44 @@ function initProductPage() {
     $(".size-row")?.classList.remove("is-error");
   });
 
+  $$("[data-acc]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const item = btn.closest("[data-acc-item]");
+      const open = item.classList.contains("is-open");
+      $$("[data-acc-item]").forEach((el) => el.classList.remove("is-open"));
+      if (!open) item.classList.add("is-open");
+    });
+  });
+
+  const qtyInput = $("[data-pdp-qty-input]");
+  const readQty = () => clampQty(qtyInput?.value);
+  const writeQty = (value) => {
+    if (qtyInput) qtyInput.value = String(clampQty(value));
+  };
+
+  root.addEventListener("click", (event) => {
+    const step = event.target.closest("[data-pdp-qty]");
+    if (!step) return;
+    writeQty(readQty() + Number(step.dataset.pdpQty));
+  });
+
+  qtyInput?.addEventListener("change", () => writeQty(qtyInput.value));
+
   $("[data-add]").addEventListener("click", () => {
     if (!selectedSize) {
       $(".size-row")?.classList.add("is-error");
       return;
     }
-    addToCart(product.id, selectedSize);
+    addToCart(product.id, selectedSize, readQty(), selectedColor);
   });
 }
 
 function initCheckout() {
   const start = $("[data-checkout-start]");
-  const form = $("[data-checkout-form]");
-  if (!start || !form) return;
-
+  if (!start) return;
   start.addEventListener("click", () => {
     if (!readCart().length) return;
-    start.hidden = true;
-    form.style.display = "flex";
-    form.classList.add("is-visible");
-  });
-
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    localStorage.setItem(CART_KEY, "[]");
-    $$("[data-bag-count]").forEach((el) => {
-      el.textContent = "0";
-    });
-    const body = $("[data-cart-body]");
-    const foot = $("[data-cart-foot]");
-    if (body) {
-      body.innerHTML = `
-        <div class="order-confirm" style="display:block">
-          <h3>Received.</h3>
-          <p>A member of FOUND will confirm your order shortly.</p>
-        </div>
-      `;
-    }
-    if (foot) foot.hidden = true;
-    form.style.display = "none";
-    start.hidden = false;
+    window.location.href = "checkout.html";
   });
 }
 
@@ -357,11 +538,18 @@ document.addEventListener("click", (event) => {
 
   const qtyBtn = event.target.closest("[data-qty]");
   if (qtyBtn) {
-    updateQty(qtyBtn.dataset.qty, qtyBtn.dataset.size, Number(qtyBtn.dataset.delta));
+    updateQty(
+      qtyBtn.dataset.qty,
+      qtyBtn.dataset.size,
+      qtyBtn.dataset.color,
+      Number(qtyBtn.dataset.delta)
+    );
   }
 
   const removeBtn = event.target.closest("[data-remove]");
-  if (removeBtn) removeItem(removeBtn.dataset.remove, removeBtn.dataset.size);
+  if (removeBtn) {
+    removeItem(removeBtn.dataset.remove, removeBtn.dataset.size, removeBtn.dataset.color);
+  }
 });
 
 document.addEventListener("keydown", (event) => {
