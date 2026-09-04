@@ -144,15 +144,20 @@ function updateReferenceUi(form) {
   const btn = $("[data-place-order]");
   const warn = $("[data-ref-warn]");
   const value = (input?.value || "").trim();
-  const ok = value.length >= 3;
-  if (btn) btn.disabled = !ok;
-  if (warn) warn.hidden = ok || value.length === 0;
+  const hasRef = value.length >= 3;
+  const hasProvince = Boolean(form.province.value);
+  if (btn) btn.disabled = !(hasRef && hasProvince);
+  if (warn) warn.hidden = hasRef || value.length === 0;
 }
 
 async function submitOrder(form) {
   const errorEl = $("[data-form-error]");
   const btn = $("[data-place-order]");
   const reference = form.reference.value.trim();
+  if (!form.province.value) {
+    form.province.focus();
+    return;
+  }
   if (reference.length < 3) {
     $("[data-ref-warn]").hidden = false;
     form.reference.focus();
@@ -225,7 +230,7 @@ async function submitOrder(form) {
       errorEl.textContent =
         "The order could not be sent. Check your connection and try again.";
     }
-    btn.disabled = false;
+    updateReferenceUi(form);
     btn.textContent = "Place order";
   }
 }
@@ -247,9 +252,12 @@ function initCheckoutPage() {
   form.firstName.addEventListener("input", () => updateReferenceUi(form));
   form.lastName.addEventListener("input", () => updateReferenceUi(form));
   form.reference.addEventListener("input", () => updateReferenceUi(form));
-  const refreshDelivery = () => renderCheckoutSummary();
-  form.province.addEventListener("change", refreshDelivery);
-  form.province.addEventListener("input", refreshDelivery);
+  const onProvinceChange = () => {
+    renderCheckoutSummary();
+    updateReferenceUi(form);
+  };
+  form.province.addEventListener("change", onProvinceChange);
+  form.province.addEventListener("input", onProvinceChange);
 
   $("[data-use-suggest]")?.addEventListener("click", () => {
     form.reference.value = suggestedReference(form.firstName.value, form.lastName.value);
