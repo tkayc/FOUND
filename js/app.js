@@ -65,7 +65,7 @@ const PRODUCTS = [
         id: "black",
         name: "Black",
         images: [
-          "images/cream and black tees.jpeg",
+          "images/WhatsApp Image 2026-09-03 at 08.32.07 (3).jpeg",
           "images/black_tee_back.jpeg",
           "images/tees.jpeg",
           "images/tees and caps.jpeg",
@@ -76,9 +76,9 @@ const PRODUCTS = [
         name: "Cream",
         images: [
           "images/cream_tee_grid.jpeg",
-          "images/cream and black tees.jpeg",
           "images/colar_cream.tee.jpeg",
           "images/tees.jpeg",
+          "images/tees and caps.jpeg",
         ],
       },
       {
@@ -166,7 +166,7 @@ const PRODUCTS = [
         name: "Cream",
         images: [
           "images/tees and caps.jpeg",
-          "images/cream and black tees.jpeg",
+          "images/cream_tee_grid.jpeg",
           "images/WhatsApp Image 2026-09-03 at 08.32.07 (4).jpeg",
         ],
       },

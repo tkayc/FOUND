@@ -593,9 +593,19 @@ function ownerText_(data, orderId) {
  * Web app
  * ------------------------------------------------------------------ */
 
+function readOrder_(e) {
+  if (e && e.postData && e.postData.contents) {
+    return JSON.parse(e.postData.contents);
+  }
+  if (e && e.parameter && e.parameter.payload) {
+    return JSON.parse(e.parameter.payload);
+  }
+  throw new Error("No order body");
+}
+
 function doPost(e) {
   try {
-    const data = JSON.parse(e.postData.contents);
+    const data = readOrder_(e);
     const orderId = data.orderId || "FOUND-" + Date.now();
 
     const itemsText = (data.items || [])

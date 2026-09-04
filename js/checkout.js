@@ -133,6 +133,38 @@ function renderCheckoutSummary() {
   }
 }
 
+function showFormError(message) {
+  const errorEl = $("[data-form-error]");
+  if (!errorEl) return;
+  if (!message) {
+    errorEl.hidden = true;
+    errorEl.textContent = "";
+    return;
+  }
+  errorEl.hidden = false;
+  errorEl.textContent = message;
+  errorEl.scrollIntoView({ block: "center", behavior: "smooth" });
+}
+
+function missingFields(form) {
+  const labels = {
+    firstName: "first name",
+    lastName: "surname",
+    email: "email",
+    phone: "phone",
+    address: "street address",
+    city: "city",
+    province: "province",
+    postal: "postal code",
+    country: "country",
+    reference: "bank reference",
+  };
+  return Object.keys(labels).filter((name) => {
+    const field = form.elements[name];
+    return !field || !String(field.value || "").trim();
+  }).map((name) => labels[name]);
+}
+
 function updateReferenceUi(form) {
   const first = form.firstName.value;
   const last = form.lastName.value;
@@ -145,22 +177,73 @@ function updateReferenceUi(form) {
   const warn = $("[data-ref-warn]");
   const value = (input?.value || "").trim();
   const hasRef = value.length >= 3;
-  const hasProvince = Boolean(form.province.value);
+  const province = form.elements.province ? form.elements.province.value : "";
+  const hasProvince = Boolean(province);
   if (btn) btn.disabled = !(hasRef && hasProvince);
   if (warn) warn.hidden = hasRef || value.length === 0;
 }
 
+function saveOrderLocally(payload) {
+  const stored = JSON.parse(localStorage.getItem("found-orders") || "[]");
+  stored.push({ ...payload, createdAt: new Date().toISOString() });
+  localStorage.setItem("found-orders", JSON.stringify(stored));
+}
+
+function sendOrderWebhook(payload) {
+  const webhook = window.FOUND_CONFIG && window.FOUND_CONFIG.orderWebhook;
+  if (!webhook) return Promise.resolve("local");
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 12000);
+
+  return fetch(webhook, {
+    method: "POST",
+    mode: "no-cors",
+    redirect: "follow",
+    body: JSON.stringify(payload),
+    signal: controller.signal,
+  })
+    .then(() => "sent")
+    .catch(() => "failed")
+    .finally(() => clearTimeout(timer));
+}
+
+function showOrderDone(payload, emailed) {
+  localStorage.setItem(CART_KEY, "[]");
+  renderCart();
+  const app = $("[data-checkout-app]");
+  const done = $("[data-checkout-done]");
+  if (app) app.hidden = true;
+  if (done) done.hidden = false;
+  if ($("[data-done-id]")) $("[data-done-id]").textContent = payload.orderId;
+  if ($("[data-done-copy]")) {
+    $("[data-done-copy]").textContent = emailed
+      ? `A confirmation will be sent to ${payload.email}. We will match your payment using the reference ${payload.reference}.`
+      : `Order ${payload.orderId} is saved. If you do not get an email, the order sheet may not be connected yet — keep your reference ${payload.reference}.`;
+  }
+}
+
 async function submitOrder(form) {
-  const errorEl = $("[data-form-error]");
   const btn = $("[data-place-order]");
-  const reference = form.reference.value.trim();
-  if (!form.province.value) {
-    form.province.focus();
+  const reference = (form.elements.reference.value || "").trim();
+  const province = form.elements.province ? form.elements.province.value : "";
+  const missing = missingFields(form);
+
+  if (missing.length) {
+    const invalid = form.querySelector(":invalid");
+    if (invalid && invalid.focus) invalid.focus();
+    showFormError("Please fill in: " + missing.join(", ") + ".");
+    return;
+  }
+  if (!province) {
+    form.elements.province.focus();
+    showFormError("Select a province so delivery can be calculated.");
     return;
   }
   if (reference.length < 3) {
     $("[data-ref-warn]").hidden = false;
-    form.reference.focus();
+    form.elements.reference.focus();
+    showFormError("Enter the bank reference you used on the transfer.");
     return;
   }
 
@@ -172,7 +255,7 @@ async function submitOrder(form) {
 
   const name = `${form.firstName.value.trim()} ${form.lastName.value.trim()}`.trim();
   const subtotal = cartTotal(lines);
-  const delivery = deliveryFee(subtotal, form.province.value);
+  const delivery = deliveryFee(subtotal, province);
   const total = subtotal + delivery;
   const orderId = `FOUND-${Date.now().toString().slice(-6)}`;
   const payload = {
@@ -184,7 +267,7 @@ async function submitOrder(form) {
     phone: form.phone.value.trim(),
     address: form.address.value.trim(),
     city: form.city.value.trim(),
-    province: form.province.value,
+    province,
     postal: form.postal.value.trim(),
     country: form.country.value.trim(),
     notes: form.notes.value.trim(),
@@ -196,43 +279,15 @@ async function submitOrder(form) {
     total,
   };
 
-  btn.disabled = true;
-  btn.textContent = "Placing order…";
-  if (errorEl) errorEl.hidden = true;
-
-  const webhook = window.FOUND_CONFIG?.orderWebhook;
-
-  try {
-    if (webhook) {
-      await fetch(webhook, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(payload),
-      });
-    } else {
-      const stored = JSON.parse(localStorage.getItem("found-orders") || "[]");
-      stored.push({ ...payload, createdAt: new Date().toISOString() });
-      localStorage.setItem("found-orders", JSON.stringify(stored));
-    }
-
-    localStorage.setItem(CART_KEY, "[]");
-    renderCart();
-    $("[data-checkout-app]").hidden = true;
-    const done = $("[data-checkout-done]");
-    done.hidden = false;
-    $("[data-done-id]").textContent = orderId;
-    $("[data-done-copy]").textContent =
-      `A confirmation will be sent to ${payload.email}. We will match your payment using the reference ${reference}.`;
-  } catch (err) {
-    if (errorEl) {
-      errorEl.hidden = false;
-      errorEl.textContent =
-        "The order could not be sent. Check your connection and try again.";
-    }
-    updateReferenceUi(form);
-    btn.textContent = "Place order";
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = "Placing order…";
   }
+  showFormError("");
+
+  saveOrderLocally(payload);
+  const result = await sendOrderWebhook(payload);
+  showOrderDone(payload, result === "sent");
 }
 
 function initCheckoutPage() {
@@ -249,15 +304,15 @@ function initCheckoutPage() {
   renderCheckoutSummary();
   updateReferenceUi(form);
 
-  form.firstName.addEventListener("input", () => updateReferenceUi(form));
-  form.lastName.addEventListener("input", () => updateReferenceUi(form));
-  form.reference.addEventListener("input", () => updateReferenceUi(form));
+  ["firstName", "lastName", "reference"].forEach((name) => {
+    form.elements[name]?.addEventListener("input", () => updateReferenceUi(form));
+  });
   const onProvinceChange = () => {
     renderCheckoutSummary();
     updateReferenceUi(form);
   };
-  form.province.addEventListener("change", onProvinceChange);
-  form.province.addEventListener("input", onProvinceChange);
+  form.elements.province?.addEventListener("change", onProvinceChange);
+  form.elements.province?.addEventListener("input", onProvinceChange);
 
   $("[data-use-suggest]")?.addEventListener("click", () => {
     form.reference.value = suggestedReference(form.firstName.value, form.lastName.value);
@@ -267,10 +322,6 @@ function initCheckoutPage() {
 
   form.addEventListener("submit", (event) => {
     event.preventDefault();
-    if (!form.reportValidity()) {
-      if (!form.reference.value.trim()) $("[data-ref-warn]").hidden = false;
-      return;
-    }
     submitOrder(form);
   });
 }
