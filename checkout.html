@@ -145,10 +145,21 @@
         <aside class="checkout-summary">
           <h2>Your bag</h2>
           <div data-checkout-items></div>
+          <div class="summary-totals">
+            <div class="summary-line">
+              <span>Subtotal</span>
+              <span data-checkout-subtotal>R0</span>
+            </div>
+            <div class="summary-line">
+              <span>Delivery</span>
+              <span data-checkout-delivery>R0</span>
+            </div>
+          </div>
           <div class="cart-subtotal">
             <span>Total</span>
             <span data-checkout-total>R0</span>
           </div>
+          <p class="checkout-note" data-delivery-note></p>
           <p class="checkout-note">You will receive an email confirmation after placing the order.</p>
         </aside>
       </div>
@@ -182,7 +193,7 @@
           <span data-subtotal>R0</span>
         </div>
         <a class="checkout-btn" href="checkout.html">Checkout</a>
-        <p class="checkout-note">Bank transfer only.</p>
+        <p class="checkout-note">Bank transfer only. Delivery is added at checkout.</p>
       </div>
     </aside>
 

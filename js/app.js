@@ -202,9 +202,22 @@ const colorOf = (product, colorId) =>
 
 const productThumb = (product, colorId) => colorOf(product, colorId).images[0];
 
+const lineQty = (item) => clampQty(item && item.qty);
+
+const lineTotal = (product, item) => Number(product.price) * lineQty(item);
+
 const readCart = () => {
   try {
-    return JSON.parse(localStorage.getItem(CART_KEY)) || [];
+    const raw = JSON.parse(localStorage.getItem(CART_KEY)) || [];
+    if (!Array.isArray(raw)) return [];
+    return raw
+      .filter((item) => item && item.id)
+      .map((item) => ({
+        id: item.id,
+        size: item.size || "",
+        color: item.color || "",
+        qty: clampQty(item.qty),
+      }));
   } catch {
     return [];
   }
@@ -233,11 +246,15 @@ const addToCart = (id, size, qty = 1, color = "") => {
 };
 
 const updateQty = (id, size, color, delta) => {
+  const step = Number(delta);
+  if (!Number.isFinite(step) || step === 0) return;
   const cart = readCart()
-    .map((item) =>
-      sameLine(item, id, size, color) ? { ...item, qty: item.qty + delta } : item
-    )
-    .filter((item) => item.qty > 0);
+    .map((item) => {
+      if (!sameLine(item, id, size, color)) return item;
+      return { ...item, qty: item.qty + step };
+    })
+    .filter((item) => item.qty > 0)
+    .map((item) => ({ ...item, qty: clampQty(item.qty) }));
   writeCart(cart);
 };
 
@@ -266,7 +283,7 @@ function renderCart() {
   if (foot) foot.hidden = false;
   const subtotal = cart.reduce((sum, item) => {
     const product = productById(item.id);
-    return sum + (product ? product.price * item.qty : 0);
+    return sum + (product ? lineTotal(product, item) : 0);
   }, 0);
 
   body.innerHTML = cart
@@ -275,18 +292,23 @@ function renderCart() {
       if (!product) return "";
       const color = colorOf(product, item.color);
       const sizeLabel = item.size === "OS" ? "One size" : item.size;
+      const qty = lineQty(item);
       return `
         <article class="cart-item">
           <img src="${assetUrl(productThumb(product, item.color))}" alt="${product.name}">
           <div>
             <h3>${product.name}</h3>
-            <p>${color.name} · ${sizeLabel} · ${formatPrice(product.price)}</p>
+            <p>${color.name} · ${sizeLabel}</p>
+            <p>${qty} × ${formatPrice(product.price)}</p>
             <button class="remove-item" data-remove="${product.id}" data-size="${item.size}" data-color="${item.color}">Remove</button>
           </div>
-          <div class="qty">
-            <button data-qty="${product.id}" data-size="${item.size}" data-color="${item.color}" data-delta="-1" aria-label="Decrease">−</button>
-            <span>${item.qty}</span>
-            <button data-qty="${product.id}" data-size="${item.size}" data-color="${item.color}" data-delta="1" aria-label="Increase">+</button>
+          <div class="cart-item__aside">
+            <p class="cart-item__total">${formatPrice(lineTotal(product, item))}</p>
+            <div class="qty">
+              <button data-qty="${product.id}" data-size="${item.size}" data-color="${item.color}" data-delta="-1" aria-label="Decrease">−</button>
+              <span>${qty}</span>
+              <button data-qty="${product.id}" data-size="${item.size}" data-color="${item.color}" data-delta="1" aria-label="Increase">+</button>
+            </div>
           </div>
         </article>
       `;

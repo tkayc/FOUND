@@ -112,6 +112,8 @@ function getSheet_() {
       "Postal code",
       "Country",
       "Items",
+      "Subtotal",
+      "Delivery",
       "Total",
       "Payment",
       "Bank reference",
@@ -209,10 +211,14 @@ function sectionLabel_(text) {
   );
 }
 
-function itemsTable_(items, total) {
+function itemsTable_(data) {
+  const items = data.items || [];
+  const total = Number(data.total || 0);
+  const delivery = Number(data.delivery || 0);
+  const subtotal = data.subtotal != null ? Number(data.subtotal) : total - delivery;
   let rows = "";
 
-  (items || []).forEach(function (item) {
+  items.forEach(function (item) {
     const variant = variantOf_(item);
     rows +=
       '<tr><td style="padding:14px 0;border-bottom:1px solid ' +
@@ -244,11 +250,28 @@ function itemsTable_(items, total) {
       "</td></tr>";
   });
 
+  const minorRow = function (label, value) {
+    return (
+      '<tr><td style="padding:10px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:' +
+      COLOR.muted +
+      ';">' +
+      esc_(label) +
+      '</td><td align="right" style="padding:10px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:' +
+      COLOR.muted +
+      ';white-space:nowrap;">' +
+      esc_(value) +
+      "</td></tr>"
+    );
+  };
+
+  rows += minorRow("Subtotal", money_(subtotal));
+  rows += minorRow("Delivery", delivery ? money_(delivery) : "Free");
+
   rows +=
-    '<tr><td style="padding:16px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:' +
+    '<tr><td style="padding:14px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:' +
     COLOR.body +
     ';">Total</td>' +
-    '<td align="right" style="padding:16px 0 0;font-family:Georgia,\'Times New Roman\',serif;font-size:19px;color:' +
+    '<td align="right" style="padding:14px 0 0;font-family:Georgia,\'Times New Roman\',serif;font-size:19px;color:' +
     COLOR.body +
     ';white-space:nowrap;">' +
     esc_(money_(total)) +
@@ -341,7 +364,7 @@ function customerHtml_(data, orderId) {
     // Items
     '<tr><td style="padding:32px 34px 0;">' +
     sectionLabel_("Your order") +
-    itemsTable_(data.items, data.total) +
+    itemsTable_(data) +
     "</td></tr>" +
     // Payment
     '<tr><td style="padding:32px 34px 0;">' +
@@ -427,6 +450,9 @@ function customerText_(data, orderId) {
     "Order: " + orderId + "\n" +
     "Date: " + today_() + "\n\n" +
     "YOUR ORDER\n" + lines.join("\n") + "\n" +
+    "Subtotal: " +
+    money_(data.subtotal != null ? data.subtotal : data.total - (data.delivery || 0)) + "\n" +
+    "Delivery: " + (data.delivery ? money_(data.delivery) : "Free") + "\n" +
     "Total: " + money_(data.total) + "\n\n" +
     "PAYMENT — BANK TRANSFER\n" +
     "Account name: " + BANK.accountName + "\n" +
@@ -503,7 +529,7 @@ function ownerHtml_(data, orderId) {
     "</td></tr>" +
     '<tr><td style="padding:30px 34px 0;">' +
     sectionLabel_("Items") +
-    itemsTable_(data.items, data.total) +
+    itemsTable_(data) +
     "</td></tr>" +
     '<tr><td style="padding:30px 34px 0;">' +
     sectionLabel_("Customer") +
@@ -548,6 +574,7 @@ function ownerText_(data, orderId) {
     "New order " + orderId + "\n" +
     today_() + " · Awaiting payment check\n\n" +
     "Reference: " + data.reference + "\n" +
+    "Delivery: " + (data.delivery ? money_(data.delivery) : "Free") + "\n" +
     "Total: " + money_(data.total) + "\n\n" +
     "ITEMS\n" + lines.join("\n") + "\n\n" +
     "CUSTOMER\n" +
@@ -596,6 +623,8 @@ function doPost(e) {
       data.postal || "",
       data.country || "South Africa",
       itemsText,
+      data.subtotal != null ? data.subtotal : data.total || "",
+      data.delivery || 0,
       data.total || "",
       "Bank transfer / deposit",
       data.reference || "",
@@ -663,7 +692,9 @@ function sendTestEmails() {
     country: "South Africa",
     notes: "Please deliver after 17:00.",
     reference: "Thabo_Mokoena",
-    total: 1397,
+    subtotal: 1397,
+    delivery: 99,
+    total: 1496,
     items: [
       { name: "The F. Essential Tee", color: "Black", size: "L", qty: 2, price: 549 },
       { name: "The F. Essential Cap", color: "Cream", size: "One size", qty: 1, price: 299 },
